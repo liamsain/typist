@@ -362,15 +362,139 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[17] = list[i];
-    	child_ctx[19] = i;
+    	child_ctx[18] = list[i];
+    	child_ctx[20] = i;
     	return child_ctx;
     }
 
-    // (145:6) {#each wordsToType as word, i}
+    function get_each_context_1(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[21] = list[i];
+    	return child_ctx;
+    }
+
+    // (174:0) {#if highScores.length}
+    function create_if_block_2(ctx) {
+    	let h4;
+    	let t1;
+    	let ol;
+    	let each_value_1 = /*highScores*/ ctx[4];
+    	validate_each_argument(each_value_1);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value_1.length; i += 1) {
+    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			h4 = element("h4");
+    			h4.textContent = "High scores";
+    			t1 = space();
+    			ol = element("ol");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			add_location(h4, file, 174, 2, 4585);
+    			add_location(ol, file, 175, 2, 4608);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, h4, anchor);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, ol, anchor);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(ol, null);
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*highScores*/ 16) {
+    				each_value_1 = /*highScores*/ ctx[4];
+    				validate_each_argument(each_value_1);
+    				let i;
+
+    				for (i = 0; i < each_value_1.length; i += 1) {
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block_1(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(ol, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value_1.length;
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(h4);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(ol);
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_2.name,
+    		type: "if",
+    		source: "(174:0) {#if highScores.length}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (177:4) {#each highScores as score}
+    function create_each_block_1(ctx) {
+    	let li;
+    	let t0_value = /*score*/ ctx[21] + "";
+    	let t0;
+    	let t1;
+
+    	const block = {
+    		c: function create() {
+    			li = element("li");
+    			t0 = text(t0_value);
+    			t1 = space();
+    			add_location(li, file, 177, 6, 4651);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, li, anchor);
+    			append_dev(li, t0);
+    			append_dev(li, t1);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*highScores*/ 16 && t0_value !== (t0_value = /*score*/ ctx[21] + "")) set_data_dev(t0, t0_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(li);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block_1.name,
+    		type: "each",
+    		source: "(177:4) {#each highScores as score}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (190:6) {#each wordsToType as word, i}
     function create_each_block(ctx) {
     	let p;
-    	let t0_value = /*word*/ ctx[17] + "";
+    	let t0_value = /*word*/ ctx[18] + "";
     	let t0;
     	let t1;
 
@@ -379,10 +503,10 @@ var app = (function () {
     			p = element("p");
     			t0 = text(t0_value);
     			t1 = space();
-    			attr_dev(p, "class", "word svelte-klungf");
-    			toggle_class(p, "word--active", /*i*/ ctx[19] === /*currentWordIndex*/ ctx[2]);
-    			toggle_class(p, "word--incorrect", /*i*/ ctx[19] === /*currentWordIndex*/ ctx[2] && /*currentWordIsSpeltIncorrectly*/ ctx[5]);
-    			add_location(p, file, 145, 8, 3786);
+    			attr_dev(p, "class", "word svelte-1b3bsq0");
+    			toggle_class(p, "word--active", /*i*/ ctx[20] === /*currentWordIndex*/ ctx[2]);
+    			toggle_class(p, "word--incorrect", /*i*/ ctx[20] === /*currentWordIndex*/ ctx[2] && /*currentWordIsSpeltIncorrectly*/ ctx[6]);
+    			add_location(p, file, 190, 8, 4891);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -390,14 +514,14 @@ var app = (function () {
     			append_dev(p, t1);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*wordsToType*/ 16 && t0_value !== (t0_value = /*word*/ ctx[17] + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*wordsToType*/ 32 && t0_value !== (t0_value = /*word*/ ctx[18] + "")) set_data_dev(t0, t0_value);
 
     			if (dirty & /*currentWordIndex*/ 4) {
-    				toggle_class(p, "word--active", /*i*/ ctx[19] === /*currentWordIndex*/ ctx[2]);
+    				toggle_class(p, "word--active", /*i*/ ctx[20] === /*currentWordIndex*/ ctx[2]);
     			}
 
-    			if (dirty & /*currentWordIndex, currentWordIsSpeltIncorrectly*/ 36) {
-    				toggle_class(p, "word--incorrect", /*i*/ ctx[19] === /*currentWordIndex*/ ctx[2] && /*currentWordIsSpeltIncorrectly*/ ctx[5]);
+    			if (dirty & /*currentWordIndex, currentWordIsSpeltIncorrectly*/ 68) {
+    				toggle_class(p, "word--incorrect", /*i*/ ctx[20] === /*currentWordIndex*/ ctx[2] && /*currentWordIsSpeltIncorrectly*/ ctx[6]);
     			}
     		},
     		d: function destroy(detaching) {
@@ -409,14 +533,14 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(145:6) {#each wordsToType as word, i}",
+    		source: "(190:6) {#each wordsToType as word, i}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (155:2) {#if !completedSession}
+    // (200:2) {#if !completedSession}
     function create_if_block_1(ctx) {
     	let input;
     	let mounted;
@@ -427,7 +551,7 @@ var app = (function () {
     			input = element("input");
     			attr_dev(input, "id", "input-text");
     			attr_dev(input, "autocomplete", "off");
-    			add_location(input, file, 155, 2, 4049);
+    			add_location(input, file, 200, 2, 5154);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, input, anchor);
@@ -435,8 +559,8 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "input", /*input_input_handler*/ ctx[9]),
-    					listen_dev(input, "keydown", /*handleKeyDown*/ ctx[7], false, false, false)
+    					listen_dev(input, "input", /*input_input_handler*/ ctx[10]),
+    					listen_dev(input, "keydown", /*handleKeyDown*/ ctx[8], false, false, false)
     				];
 
     				mounted = true;
@@ -458,14 +582,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(155:2) {#if !completedSession}",
+    		source: "(200:2) {#if !completedSession}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (158:2) {#if completedSession}
+    // (203:2) {#if completedSession}
     function create_if_block(ctx) {
     	let p;
     	let t0;
@@ -485,8 +609,8 @@ var app = (function () {
     			t3 = space();
     			button = element("button");
     			button.textContent = "Go again";
-    			add_location(p, file, 158, 4, 4180);
-    			add_location(button, file, 159, 4, 4233);
+    			add_location(p, file, 203, 4, 5285);
+    			add_location(button, file, 204, 4, 5338);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -497,7 +621,7 @@ var app = (function () {
     			insert_dev(target, button, anchor);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*restart*/ ctx[8], false, false, false);
+    				dispose = listen_dev(button, "click", /*restart*/ ctx[9], false, false, false);
     				mounted = true;
     			}
     		},
@@ -517,7 +641,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(158:2) {#if completedSession}",
+    		source: "(203:2) {#if completedSession}",
     		ctx
     	});
 
@@ -525,17 +649,20 @@ var app = (function () {
     }
 
     function create_fragment(ctx) {
+    	let scores;
+    	let t0;
     	let main;
     	let h1;
-    	let t1;
-    	let p;
     	let t2;
+    	let p;
     	let t3;
+    	let t4;
     	let div1;
     	let div0;
-    	let t4;
     	let t5;
-    	let each_value = /*wordsToType*/ ctx[4];
+    	let t6;
+    	let if_block0 = /*highScores*/ ctx[4].length && create_if_block_2(ctx);
+    	let each_value = /*wordsToType*/ ctx[5];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -543,18 +670,21 @@ var app = (function () {
     		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
     	}
 
-    	let if_block0 = !/*completedSession*/ ctx[3] && create_if_block_1(ctx);
-    	let if_block1 = /*completedSession*/ ctx[3] && create_if_block(ctx);
+    	let if_block1 = !/*completedSession*/ ctx[3] && create_if_block_1(ctx);
+    	let if_block2 = /*completedSession*/ ctx[3] && create_if_block(ctx);
 
     	const block = {
     		c: function create() {
+    			scores = element("scores");
+    			if (if_block0) if_block0.c();
+    			t0 = space();
     			main = element("main");
     			h1 = element("h1");
     			h1.textContent = "Typist";
-    			t1 = space();
+    			t2 = space();
     			p = element("p");
-    			t2 = text(/*timeElapsedDisplay*/ ctx[6]);
-    			t3 = space();
+    			t3 = text(/*timeElapsedDisplay*/ ctx[7]);
+    			t4 = space();
     			div1 = element("div");
     			div0 = element("div");
 
@@ -562,30 +692,34 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			t4 = space();
-    			if (if_block0) if_block0.c();
     			t5 = space();
     			if (if_block1) if_block1.c();
-    			attr_dev(h1, "class", "svelte-klungf");
-    			add_location(h1, file, 140, 2, 3624);
-    			add_location(p, file, 141, 2, 3642);
-    			attr_dev(div0, "class", "word-container__inner svelte-klungf");
-    			add_location(div0, file, 143, 4, 3705);
-    			attr_dev(div1, "class", "word-container svelte-klungf");
-    			add_location(div1, file, 142, 2, 3672);
-    			attr_dev(main, "class", "svelte-klungf");
-    			add_location(main, file, 139, 0, 3615);
+    			t6 = space();
+    			if (if_block2) if_block2.c();
+    			add_location(scores, file, 172, 0, 4550);
+    			attr_dev(h1, "class", "svelte-1b3bsq0");
+    			add_location(h1, file, 185, 2, 4729);
+    			add_location(p, file, 186, 2, 4747);
+    			attr_dev(div0, "class", "word-container__inner svelte-1b3bsq0");
+    			add_location(div0, file, 188, 4, 4810);
+    			attr_dev(div1, "class", "word-container svelte-1b3bsq0");
+    			add_location(div1, file, 187, 2, 4777);
+    			attr_dev(main, "class", "svelte-1b3bsq0");
+    			add_location(main, file, 184, 0, 4720);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
+    			insert_dev(target, scores, anchor);
+    			if (if_block0) if_block0.m(scores, null);
+    			insert_dev(target, t0, anchor);
     			insert_dev(target, main, anchor);
     			append_dev(main, h1);
-    			append_dev(main, t1);
+    			append_dev(main, t2);
     			append_dev(main, p);
-    			append_dev(p, t2);
-    			append_dev(main, t3);
+    			append_dev(p, t3);
+    			append_dev(main, t4);
     			append_dev(main, div1);
     			append_dev(div1, div0);
 
@@ -593,16 +727,29 @@ var app = (function () {
     				each_blocks[i].m(div0, null);
     			}
 
-    			append_dev(main, t4);
-    			if (if_block0) if_block0.m(main, null);
     			append_dev(main, t5);
     			if (if_block1) if_block1.m(main, null);
+    			append_dev(main, t6);
+    			if (if_block2) if_block2.m(main, null);
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*timeElapsedDisplay*/ 64) set_data_dev(t2, /*timeElapsedDisplay*/ ctx[6]);
+    			if (/*highScores*/ ctx[4].length) {
+    				if (if_block0) {
+    					if_block0.p(ctx, dirty);
+    				} else {
+    					if_block0 = create_if_block_2(ctx);
+    					if_block0.c();
+    					if_block0.m(scores, null);
+    				}
+    			} else if (if_block0) {
+    				if_block0.d(1);
+    				if_block0 = null;
+    			}
 
-    			if (dirty & /*currentWordIndex, currentWordIsSpeltIncorrectly, wordsToType*/ 52) {
-    				each_value = /*wordsToType*/ ctx[4];
+    			if (dirty & /*timeElapsedDisplay*/ 128) set_data_dev(t3, /*timeElapsedDisplay*/ ctx[7]);
+
+    			if (dirty & /*currentWordIndex, currentWordIsSpeltIncorrectly, wordsToType*/ 100) {
+    				each_value = /*wordsToType*/ ctx[5];
     				validate_each_argument(each_value);
     				let i;
 
@@ -626,38 +773,41 @@ var app = (function () {
     			}
 
     			if (!/*completedSession*/ ctx[3]) {
-    				if (if_block0) {
-    					if_block0.p(ctx, dirty);
-    				} else {
-    					if_block0 = create_if_block_1(ctx);
-    					if_block0.c();
-    					if_block0.m(main, t5);
-    				}
-    			} else if (if_block0) {
-    				if_block0.d(1);
-    				if_block0 = null;
-    			}
-
-    			if (/*completedSession*/ ctx[3]) {
     				if (if_block1) {
     					if_block1.p(ctx, dirty);
     				} else {
-    					if_block1 = create_if_block(ctx);
+    					if_block1 = create_if_block_1(ctx);
     					if_block1.c();
-    					if_block1.m(main, null);
+    					if_block1.m(main, t6);
     				}
     			} else if (if_block1) {
     				if_block1.d(1);
     				if_block1 = null;
     			}
+
+    			if (/*completedSession*/ ctx[3]) {
+    				if (if_block2) {
+    					if_block2.p(ctx, dirty);
+    				} else {
+    					if_block2 = create_if_block(ctx);
+    					if_block2.c();
+    					if_block2.m(main, null);
+    				}
+    			} else if (if_block2) {
+    				if_block2.d(1);
+    				if_block2 = null;
+    			}
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
+    			if (detaching) detach_dev(scores);
+    			if (if_block0) if_block0.d();
+    			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(main);
     			destroy_each(each_blocks, detaching);
-    			if (if_block0) if_block0.d();
     			if (if_block1) if_block1.d();
+    			if (if_block2) if_block2.d();
     		}
     	};
 
@@ -672,6 +822,38 @@ var app = (function () {
     	return block;
     }
 
+    const localStorageHighScoresKey = "typist__high-scores";
+
+    function getHighScores() {
+    	const scoreString = localStorage.getItem(localStorageHighScoresKey);
+
+    	if (scoreString && scoreString.length) {
+    		return JSON.parse(scoreString);
+    	}
+
+    	return [];
+    }
+
+    function updateHighScores(score) {
+    	if (score === 0) {
+    		return;
+    	}
+
+    	let highScores = getHighScores();
+
+    	if (highScores.length > 0) {
+    		const lowerScoreHighScoreIndex = highScores.findIndex(highScore => highScore < score);
+
+    		if (lowerScoreHighScoreIndex > -1) {
+    			highScores[lowerScoreHighScoreIndex] = score;
+    		}
+    	} else {
+    		highScores.push(score);
+    	}
+
+    	localStorage.setItem(localStorageHighScoresKey, JSON.stringify(highScores.sort((a, b) => b - a).slice(0, 5)));
+    }
+
     function instance($$self, $$props, $$invalidate) {
     	const hundredMostCommonWords = `a,about,all,also,and,as,at,be,because,but,by,can,come,could,day,do,even,find,first,for,from,get,give,go,have,he,her,here,him,his,how,I,if,in,into,it,its,just,know,like,look,make,man,many,me,more,my,new,no,not,now,of,on,one,only,or,other,our,out,people,say,see,she,so,some,take,tell,than,that,the,their,them,then,there,these,they,thing,think,this,those,time,to,two,up,use,very,want,way,we,well,what,when,which,who,will,with,would,year,you,your`.split(",");
     	let wordsTyped = 0;
@@ -682,19 +864,22 @@ var app = (function () {
     	let completedSession = false;
     	let timerStarted = false;
     	let timeout;
+    	let highScores = getHighScores();
     	const getRandomNumBetween = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
     	let wordsToType = new Array(3000).fill("").map(x => hundredMostCommonWords[getRandomNumBetween(0, 99)]);
 
     	function startTime() {
     		const now = new Date();
     		const secondsBetweenNowAndWhenTypingBegan = (now - dateTimeTypingStarted) / 1000;
-    		$$invalidate(10, secondsElapsed = Math.round(secondsBetweenNowAndWhenTypingBegan));
+    		$$invalidate(11, secondsElapsed = Math.round(secondsBetweenNowAndWhenTypingBegan));
 
-    		if (secondsElapsed >= 60) {
+    		if (secondsElapsed >= 10) {
     			$$invalidate(3, completedSession = true);
     			clearTimeout(timeout);
-    			$$invalidate(4, wordsToType = []);
+    			$$invalidate(5, wordsToType = []);
     			document.querySelector("#input-text").blur();
+    			updateHighScores(wordsTyped);
+    			$$invalidate(4, highScores = getHighScores());
     			return;
     		}
 
@@ -724,7 +909,7 @@ var app = (function () {
     					$$invalidate(2, currentWordIndex = 0);
     				}
 
-    				$$invalidate(4, wordsToType = wordsToType.slice(1));
+    				$$invalidate(5, wordsToType = wordsToType.slice(1));
     			}
     		}
     	}
@@ -735,10 +920,10 @@ var app = (function () {
 
     	async function restart() {
     		timerStarted = false;
-    		$$invalidate(10, secondsElapsed = 0);
+    		$$invalidate(11, secondsElapsed = 0);
     		$$invalidate(1, inputText = "");
     		$$invalidate(0, wordsTyped = 0);
-    		$$invalidate(4, wordsToType = new Array(3000).fill("").map(x => hundredMostCommonWords[getRandomNumBetween(0, 99)]));
+    		$$invalidate(5, wordsToType = new Array(3000).fill("").map(x => hundredMostCommonWords[getRandomNumBetween(0, 99)]));
     		$$invalidate(3, completedSession = false);
     		await tick();
     		document.querySelector("#input-text").focus();
@@ -763,6 +948,7 @@ var app = (function () {
     		onMount,
     		tick,
     		hundredMostCommonWords,
+    		localStorageHighScoresKey,
     		wordsTyped,
     		inputText,
     		secondsElapsed,
@@ -771,6 +957,9 @@ var app = (function () {
     		completedSession,
     		timerStarted,
     		timeout,
+    		highScores,
+    		getHighScores,
+    		updateHighScores,
     		getRandomNumBetween,
     		wordsToType,
     		startTime,
@@ -783,15 +972,16 @@ var app = (function () {
     	$$self.$inject_state = $$props => {
     		if ("wordsTyped" in $$props) $$invalidate(0, wordsTyped = $$props.wordsTyped);
     		if ("inputText" in $$props) $$invalidate(1, inputText = $$props.inputText);
-    		if ("secondsElapsed" in $$props) $$invalidate(10, secondsElapsed = $$props.secondsElapsed);
+    		if ("secondsElapsed" in $$props) $$invalidate(11, secondsElapsed = $$props.secondsElapsed);
     		if ("currentWordIndex" in $$props) $$invalidate(2, currentWordIndex = $$props.currentWordIndex);
     		if ("dateTimeTypingStarted" in $$props) dateTimeTypingStarted = $$props.dateTimeTypingStarted;
     		if ("completedSession" in $$props) $$invalidate(3, completedSession = $$props.completedSession);
     		if ("timerStarted" in $$props) timerStarted = $$props.timerStarted;
     		if ("timeout" in $$props) timeout = $$props.timeout;
-    		if ("wordsToType" in $$props) $$invalidate(4, wordsToType = $$props.wordsToType);
-    		if ("currentWordIsSpeltIncorrectly" in $$props) $$invalidate(5, currentWordIsSpeltIncorrectly = $$props.currentWordIsSpeltIncorrectly);
-    		if ("timeElapsedDisplay" in $$props) $$invalidate(6, timeElapsedDisplay = $$props.timeElapsedDisplay);
+    		if ("highScores" in $$props) $$invalidate(4, highScores = $$props.highScores);
+    		if ("wordsToType" in $$props) $$invalidate(5, wordsToType = $$props.wordsToType);
+    		if ("currentWordIsSpeltIncorrectly" in $$props) $$invalidate(6, currentWordIsSpeltIncorrectly = $$props.currentWordIsSpeltIncorrectly);
+    		if ("timeElapsedDisplay" in $$props) $$invalidate(7, timeElapsedDisplay = $$props.timeElapsedDisplay);
     	};
 
     	let currentWordIsSpeltIncorrectly;
@@ -802,12 +992,12 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*inputText, wordsToType, currentWordIndex*/ 22) {
-    			 $$invalidate(5, currentWordIsSpeltIncorrectly = inputText.length && wordsToType.length && !wordsToType[currentWordIndex].startsWith(inputText));
+    		if ($$self.$$.dirty & /*inputText, wordsToType, currentWordIndex*/ 38) {
+    			 $$invalidate(6, currentWordIsSpeltIncorrectly = inputText.length && wordsToType.length && !wordsToType[currentWordIndex].startsWith(inputText));
     		}
 
-    		if ($$self.$$.dirty & /*secondsElapsed*/ 1024) {
-    			 $$invalidate(6, timeElapsedDisplay = secondsElapsed === 60
+    		if ($$self.$$.dirty & /*secondsElapsed*/ 2048) {
+    			 $$invalidate(7, timeElapsedDisplay = secondsElapsed === 60
     			? `01:00`
     			: `00:${secondsElapsed < 10 ? "0" : ""}${secondsElapsed.toString()}`);
     		}
@@ -818,6 +1008,7 @@ var app = (function () {
     		inputText,
     		currentWordIndex,
     		completedSession,
+    		highScores,
     		wordsToType,
     		currentWordIsSpeltIncorrectly,
     		timeElapsedDisplay,

@@ -3,6 +3,7 @@
   const hundredMostCommonWords = `a,about,all,also,and,as,at,be,because,but,by,can,come,could,day,do,even,find,first,for,from,get,give,go,have,he,her,here,him,his,how,I,if,in,into,it,its,just,know,like,look,make,man,many,me,more,my,new,no,not,now,of,on,one,only,or,other,our,out,people,say,see,she,so,some,take,tell,than,that,the,their,them,then,there,these,they,thing,think,this,those,time,to,two,up,use,very,want,way,we,well,what,when,which,who,will,with,would,year,you,your`.split(
     ","
   );
+  const localStorageHighScoresKey = 'typist__high-scores';
   let wordsTyped = 0;
   let inputText = "";
   let secondsElapsed = 0;
@@ -16,6 +17,35 @@
     wordsToType.length && 
     !wordsToType[currentWordIndex].startsWith(inputText);
   $: timeElapsedDisplay = secondsElapsed === 60 ? `01:00` : `00:${secondsElapsed < 10 ? '0': ''}${secondsElapsed.toString()}`;
+  let highScores = getHighScores();
+
+  function getHighScores() {
+    const scoreString = localStorage.getItem(localStorageHighScoresKey); 
+    if (scoreString && scoreString.length) {
+      return JSON.parse(scoreString);
+    }
+    return [];
+  }
+
+  function updateHighScores(score) {
+    if (score === 0) {
+      return;
+    }
+    let highScores = getHighScores();
+    if (highScores.length > 0) {
+      const lowerScoreHighScoreIndex = highScores.findIndex(highScore => highScore < score);
+      if (lowerScoreHighScoreIndex > -1) {
+        highScores[lowerScoreHighScoreIndex] = score;
+      }
+    } else {
+      highScores.push(score);
+    }
+    localStorage
+      .setItem(localStorageHighScoresKey, JSON.stringify(
+        highScores
+          .sort((a,b) => b - a)
+          .slice(0, 5)));
+  }
 
   const getRandomNumBetween = (min, max) =>
     Math.floor(Math.random() * (max - min + 1)) + min;
@@ -29,11 +59,13 @@
     const secondsBetweenNowAndWhenTypingBegan =
       (now - dateTimeTypingStarted) / 1000;
     secondsElapsed = Math.round(secondsBetweenNowAndWhenTypingBegan);
-    if (secondsElapsed >= 60) {
+    if (secondsElapsed >= 10) {
       completedSession = true;
       clearTimeout(timeout);
       wordsToType = [];
       document.querySelector('#input-text').blur();
+      updateHighScores(wordsTyped);
+      highScores = getHighScores();
       return;
     }
     timeout = setTimeout(startTime, 500);
@@ -100,7 +132,7 @@
     left: 50%;
     position: absolute;
     overflow-y: hidden;
-    width: 250px;
+    width: 350px;
     display: flex;
   }
 .word-container__inner::-webkit-scrollbar {
@@ -137,6 +169,19 @@
   }
 </style>
 
+
+<scores>
+{#if highScores.length}
+  <h4>High scores</h4>
+  <ol>
+    {#each highScores as score}
+      <li>
+        {score}
+      </li>
+    {/each}
+  </ol>
+{/if}
+</scores>
 <main>
   <h1>Typist</h1>
   <p>{timeElapsedDisplay}</p>
