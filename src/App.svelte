@@ -59,7 +59,7 @@
     const secondsBetweenNowAndWhenTypingBegan =
       (now - dateTimeTypingStarted) / 1000;
     secondsElapsed = Math.round(secondsBetweenNowAndWhenTypingBegan);
-    if (secondsElapsed >= 10) {
+    if (secondsElapsed >= 60) {
       completedSession = true;
       clearTimeout(timeout);
       wordsToType = [];
